@@ -11,6 +11,10 @@ import {
     Menu,
     MenuItem,
     InputBase,
+    Paper,
+    TextField,
+    InputAdornment,
+    Slide,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -20,6 +24,7 @@ import Image from 'next/image';
 export default function MainPage() {
     const [searchOpen, setSearchOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [searchVisible, setSearchVisible] = useState(false);
 
     const handleMenuOpen = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -31,6 +36,7 @@ export default function MainPage() {
 
     const handleSearchToggle = () => {
         setSearchOpen(!searchOpen);
+        setSearchVisible(!searchVisible);
     };
 
     return (
@@ -47,7 +53,7 @@ export default function MainPage() {
                             sx={{
                                 cursor: 'pointer',
                                 '&:hover': {
-                                    color: theme => theme.palette.primary.main,
+                                    color: (theme) => theme.palette.primary.main,
                                     transition: 'color 0.3s',
                                 },
                             }}
@@ -107,10 +113,37 @@ export default function MainPage() {
                             Community
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <IconButton color="info" onClick={handleSearchToggle} >
-                            <SearchIcon />
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
+                        <Slide direction="left" in={searchVisible}>
+                            <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
+                                <TextField
+                                    id="search-textfield"
+                                    placeholder="Search..."
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                    sx={{ borderRadius: '8px', backgroundColor: '#fff', width: "300px" }}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <IconButton color="error" onClick={handleSearchToggle}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </Box>
+                        </Slide>
+
+                        {/* Search Icon */}
+                        <IconButton color="info" onClick={handleSearchToggle}>
+                            <Slide direction="left" in={!searchVisible}>
+                                <SearchIcon />
+                            </Slide>
                         </IconButton>
+
                         <IconButton color="info" onClick={handleMenuOpen}>
                             <PersonOutlineIcon />
                         </IconButton>
@@ -119,13 +152,7 @@ export default function MainPage() {
             </AppBar>
 
             <Box sx={{ minHeight: '800px', position: 'relative' }}>
-                <Image
-                    src="/first-image-slider.png"
-                    layout="fill"
-                    objectFit="cover"
-                    quality={100}
-                    alt="Cultural Makeup"
-                />
+                <Image src="/first-image-slider.png" layout="fill" objectFit="cover" quality={100} alt="Cultural Makeup" />
 
                 <Box sx={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'common.white' }}>
                     <Typography variant="h2" fontWeight={500} gutterBottom color="primary" width="100%">
@@ -140,7 +167,7 @@ export default function MainPage() {
                             sx={{
                                 mr: 1,
                                 color: 'white',
-                                '&:hover': { backgroundColor: theme => theme.palette.primary.main, transition: 'background-color 0.3s' },
+                                '&:hover': { backgroundColor: (theme) => theme.palette.primary.main, transition: 'background-color 0.3s' },
                             }}
                         >
                             Sign In
@@ -148,9 +175,9 @@ export default function MainPage() {
                         <Button
                             variant="outlined"
                             sx={{
-                                color: theme => theme.palette.primary.main,
+                                color: (theme) => theme.palette.primary.main,
                                 '&:hover': {
-                                    borderColor: theme => theme.palette.primary.main,
+                                    borderColor: (theme) => theme.palette.primary.main,
                                     color: 'common.white',
                                     transition: 'color 0.3s, border-color 0.3s',
                                 },
@@ -162,15 +189,22 @@ export default function MainPage() {
                 </Box>
             </Box>
 
-            {searchOpen && (
-                <Box sx={{ position: 'absolute', top: '15%', left: '80%', transform: 'translate(-50%, -50%)', textAlign: 'center', backgroundColor: 'common.white', padding: '8px', borderRadius: '4px' }}>
-                    <InputBase placeholder="Search..." sx={{ width: '300px' }} />
-                    <IconButton onClick={handleSearchToggle}>
-                        <CloseIcon />
-                    </IconButton>
-                </Box>
-            )}
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            </Menu>
         </Box>
     );
 }
-
