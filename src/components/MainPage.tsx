@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AppBar,
     Box,
@@ -20,11 +20,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
+import { animated, useSpring } from 'react-spring';
 
 export default function MainPage() {
     const [searchOpen, setSearchOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchVisible, setSearchVisible] = useState(false);
+    const images = ["/first-image-slider.png", "/second-image-slider.png", "/third-image-slider.png"];
+    const texts = ["CULTURAL MAKEUP", "COMMUNITY PLATFORM", "ENGAGING TUTORIALS"];
+
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleMenuOpen = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -38,6 +43,48 @@ export default function MainPage() {
         setSearchOpen(!searchOpen);
         setSearchVisible(!searchVisible);
     };
+
+    // Use React-Spring for smooth transitions
+    const transitions = useSpring({
+        opacity: 0,
+        from: { opacity: 1 },
+        reset: true,
+        onRest: () => {
+            // Change to the next image and text
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        },
+        config: {
+            duration: 5000, // 5 seconds for each transition
+
+        },
+    });
+
+    useEffect(() => {
+        let animationFrameId: any;
+        let lastTimestamp = 0;
+        const animationSpeed = 5000; // 5 seconds per animation
+
+        const animate = (timestamp: number) => {
+            if (!lastTimestamp) {
+                lastTimestamp = timestamp;
+            }
+
+            const elapsed = timestamp - lastTimestamp;
+
+            if (elapsed > animationSpeed) {
+                setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+                lastTimestamp = timestamp;
+            }
+
+            animationFrameId = requestAnimationFrame(animate);
+        };
+
+        // Start the animation loop
+        animationFrameId = requestAnimationFrame(animate);
+
+        // Clean up the animation frame when the component unmounts
+        return () => cancelAnimationFrame(animationFrameId);
+    }, []);
 
     return (
         <Box sx={{ bgcolor: '#1E1E1E', position: 'relative', minHeight: '100vh' }}>
@@ -152,12 +199,14 @@ export default function MainPage() {
             </AppBar>
 
             <Box sx={{ minHeight: '800px', position: 'relative' }}>
-                <Image src="/first-image-slider.png" layout="fill" objectFit="cover" quality={100} alt="Cultural Makeup" />
-
-                <Box sx={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'common.white' }}>
-                    <Typography variant="h2" fontWeight={500} gutterBottom color="primary" width="100%">
-                        CULTURAL MAKEUP
+                <animated.div style={transitions}>
+                    <Image src={images[currentIndex]} layout="fill" objectFit="cover" quality={100} alt="Cultural Makeup" />
+                    <Typography sx={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }} variant="h2" fontWeight={500} gutterBottom color="primary" width="100%">
+                        {texts[currentIndex]}
                     </Typography>
+                </animated.div>
+                <Box sx={{ position: 'absolute', top: '83%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'common.white' }}>
+
                     <Typography variant="subtitle1" mt={2}>
                         Join our vibrant community platform to connect with makeup enthusiasts, share insights, and engage in discussions about the timeless allure of Egyptian beauty.
                     </Typography>
@@ -187,6 +236,7 @@ export default function MainPage() {
                         </Button>
                     </Box>
                 </Box>
+
             </Box>
 
             <Menu
@@ -205,6 +255,6 @@ export default function MainPage() {
                 <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
             </Menu>
-        </Box>
+        </Box >
     );
 }
