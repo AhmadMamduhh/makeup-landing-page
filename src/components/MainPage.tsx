@@ -30,6 +30,8 @@ export default function MainPage() {
     const texts = ["CULTURAL MAKEUP", "COMMUNITY PLATFORM", "ENGAGING TUTORIALS"];
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isEntryPoint, setIsEntryPoint] = useState(true);
+
 
     const handleMenuOpen = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -45,49 +47,38 @@ export default function MainPage() {
     };
 
     // Use React-Spring for smooth transitions
-    const transitions = useSpring({
-        opacity: 0,
-        from: { opacity: 1 },
-        reset: true,
-        onRest: () => {
-            // Change to the next image and text
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        },
-        config: {
-            duration: 5000, // 5 seconds for each transition
+    // const transitions = useSpring({
+    //     opacity: 0,
+    //     from: { opacity: 1 },
+    //     reset: true,
+    //     onRest: () => {
+    //         // Change to the next image and text
+    //         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    //     },
+    //     config: {
+    //         duration: 5000, // 5 seconds for each transition
 
-        },
-    });
+    //     },
+    // });
 
     useEffect(() => {
-        let animationFrameId: any;
-        let lastTimestamp = 0;
-        const animationSpeed = 5000; // 5 seconds per animation
+        let intervalId: any;
 
-        const animate = (timestamp: number) => {
-            if (!lastTimestamp) {
-                lastTimestamp = timestamp;
-            }
-
-            const elapsed = timestamp - lastTimestamp;
-
-            if (elapsed > animationSpeed) {
-                setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-                lastTimestamp = timestamp;
-            }
-
-            animationFrameId = requestAnimationFrame(animate);
+        const changeImage = () => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+            if (isEntryPoint)
+                setIsEntryPoint(false)
         };
 
-        // Start the animation loop
-        animationFrameId = requestAnimationFrame(animate);
+        // Change the image every 5 seconds
+        intervalId = setInterval(changeImage, 4000);
 
-        // Clean up the animation frame when the component unmounts
-        return () => cancelAnimationFrame(animationFrameId);
+        // Clean up the interval when the component unmounts
+        return () => clearInterval(intervalId);
     }, []);
 
     return (
-        <Box sx={{ bgcolor: '#1E1E1E', position: 'relative', minHeight: '100vh' }}>
+        <Box sx={{ bgcolor: '#000', position: 'relative', minHeight: '100vh' }}>
             <AppBar position="absolute" sx={{ backgroundColor: '#00000055', backdropFilter: 'blur(5px)' }}>
                 <Toolbar sx={{ justifyContent: 'space-between', py: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -199,14 +190,19 @@ export default function MainPage() {
             </AppBar>
 
             <Box sx={{ minHeight: '800px', position: 'relative' }}>
-                <animated.div style={transitions}>
-                    <Image src={images[currentIndex]} layout="fill" objectFit="cover" quality={100} alt="Cultural Makeup" />
-                    <Typography sx={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }} variant="h2" fontWeight={500} gutterBottom color="primary" width="100%">
-                        {texts[currentIndex]}
-                    </Typography>
-                </animated.div>
-                <Box sx={{ position: 'absolute', top: '83%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'common.white' }}>
+                {images.map((image, index) => (
+                    <Slide key={index} direction={index === currentIndex ? 'right' : 'left'} in={index === currentIndex} mountOnEnter unmountOnExit timeout={{ enter: index === 0 && isEntryPoint ? 0 : 1000, exit: 1000 }}>
 
+                        <Image src={image} layout="fill" objectFit="cover" quality={100} alt={`Slide ${index}`} />
+
+                    </Slide>
+                ))}
+
+                <Typography sx={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }} variant="h2" fontWeight={500} gutterBottom color="primary" width="100%">
+                    {texts[currentIndex]}
+                </Typography>
+
+                <Box sx={{ position: 'absolute', top: '83%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'common.white' }}>
                     <Typography variant="subtitle1" mt={2}>
                         Join our vibrant community platform to connect with makeup enthusiasts, share insights, and engage in discussions about the timeless allure of Egyptian beauty.
                     </Typography>
