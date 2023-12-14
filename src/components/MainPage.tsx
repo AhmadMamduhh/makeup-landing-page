@@ -26,7 +26,7 @@ export default function MainPage() {
     const [searchOpen, setSearchOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchVisible, setSearchVisible] = useState(false);
-    const images = ["/first-image-slider.png", "/second-image-slider.png", "/third-image-slider.png"];
+    const images = ["/first-image.png", "/second-image.png", "/third-image.png"];
     const texts = ["CULTURAL MAKEUP", "COMMUNITY PLATFORM", "ENGAGING TUTORIALS"];
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -80,11 +80,12 @@ export default function MainPage() {
     return (
         <Box sx={{ bgcolor: '#000', position: 'relative', minHeight: '100vh' }}>
             <AppBar position="absolute" sx={{ backgroundColor: '#00000055', backdropFilter: 'blur(5px)' }}>
-                <Toolbar sx={{ justifyContent: 'space-between', py: 2 }}>
+                <Toolbar sx={{ display: "flex", justifyContent: 'space-between', py: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Avatar alt="User Avatar" src="/user-avatar.jpg" sx={{ width: 32, height: 32 }} />
+                        <Image src={"/website-icon.png"} objectFit="fill" quality={100} width={32} height={40} alt={`amunique icon`} />
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 4, flex: 1, justifyContent: 'center' }}>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4, marginLeft: 'auto', }}>
                         <Typography
                             variant="h6"
                             color="white"
@@ -94,6 +95,7 @@ export default function MainPage() {
                                     color: (theme) => theme.palette.primary.main,
                                     transition: 'color 0.3s',
                                 },
+                                textAlign: 'center'
                             }}
                         >
                             Shop
@@ -107,6 +109,7 @@ export default function MainPage() {
                                     color: theme => theme.palette.primary.main,
                                     transition: 'color 0.3s',
                                 },
+                                textAlign: 'center'
                             }}
                         >
                             Tutorials
@@ -120,6 +123,7 @@ export default function MainPage() {
                                     color: theme => theme.palette.primary.main,
                                     transition: 'color 0.3s',
                                 },
+                                textAlign: 'center'
                             }}
                         >
                             About Us
@@ -133,6 +137,7 @@ export default function MainPage() {
                                     color: theme => theme.palette.primary.main,
                                     transition: 'color 0.3s',
                                 },
+                                textAlign: 'center'
                             }}
                         >
                             News
@@ -146,12 +151,14 @@ export default function MainPage() {
                                     color: theme => theme.palette.primary.main,
                                     transition: 'color 0.3s',
                                 },
+                                textAlign: 'center'
                             }}
                         >
                             Community
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Slide direction="left" in={searchVisible}>
                             <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
                                 <TextField
@@ -182,44 +189,13 @@ export default function MainPage() {
                             </Slide>
                         </IconButton>
 
-                        <IconButton color="info" onClick={handleMenuOpen}>
+                        <IconButton color="info" onClick={handleMenuOpen} style={{ marginRight: '5px' }}>
                             <PersonOutlineIcon />
                         </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-
-            <Box sx={{ minHeight: '800px', position: 'relative' }}>
-                {images.map((image, index) => (
-                    <Slide key={index} direction={index === currentIndex ? 'right' : 'left'} in={index === currentIndex} mountOnEnter unmountOnExit timeout={{ enter: index === 0 && isEntryPoint ? 0 : 1000, exit: 1000 }}>
-
-                        <Image src={image} layout="fill" objectFit="cover" quality={100} alt={`Slide ${index}`} />
-
-                    </Slide>
-                ))}
-
-                <Typography sx={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }} variant="h2" fontWeight={500} gutterBottom color="primary" width="100%">
-                    {texts[currentIndex]}
-                </Typography>
-
-                <Box sx={{ position: 'absolute', top: '83%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'common.white' }}>
-                    <Typography variant="subtitle1" mt={2}>
-                        Join our vibrant community platform to connect with makeup enthusiasts, share insights, and engage in discussions about the timeless allure of Egyptian beauty.
-                    </Typography>
-                    <Box sx={{ mt: 2 }}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                mr: 1,
-                                color: 'white',
-                                '&:hover': { backgroundColor: (theme) => theme.palette.primary.main, transition: 'background-color 0.3s' },
-                            }}
-                        >
-                            Sign In
-                        </Button>
                         <Button
                             variant="outlined"
                             sx={{
+                                textTransform: 'none',
                                 color: (theme) => theme.palette.primary.main,
                                 '&:hover': {
                                     borderColor: (theme) => theme.palette.primary.main,
@@ -231,9 +207,43 @@ export default function MainPage() {
                             Sign Up
                         </Button>
                     </Box>
+                </Toolbar>
+            </AppBar>
+
+            <Box sx={{ minHeight: '630px', position: 'relative' }}>
+                {images.map((image, index) => (
+                    <Box width="900px" display="flex" justifyContent="center">
+                        <Slide key={index} direction={index === currentIndex ? 'right' : 'left'} in={index === currentIndex} mountOnEnter unmountOnExit timeout={{ enter: index === 0 && isEntryPoint ? 0 : 1000, exit: 1000 }}>
+                            <Image src={image} objectFit="contain" quality={100} layout="fill" alt={`Slide ${index}`} style={{ marginTop: '30px' }} />
+
+                        </Slide>
+                    </Box>
+                ))}
+
+                <Box sx={{ textAlign: 'center', color: 'common.white', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'absolute', top: '98%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(0, 0, 0, 0.4)', width: '100%' }}>
+                    <Typography sx={{ textAlign: 'center' }} variant="subtitle1" fontSize="4.5rem" fontWeight={500} margin={0} color="primary" width="100%" fontFamily={"initial"}>
+                        {texts[currentIndex]}
+                    </Typography>
+                    <Box display="flex" justifyContent={'center'} mt={-2}>
+                        <Typography variant="subtitle1" fontWeight="bold" sx={{ width: '800px', textAlign: 'center' }}>
+                            Join our vibrant community platform to connect with makeup enthusiasts, share insights, and engage in discussions about the timeless allure of Egyptian beauty.
+                        </Typography>
+                    </Box>
+                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                            variant="contained"
+                            sx={{
+                                color: 'black',
+                                paddingX: 5
+                            }}
+                        >
+                            Start Learning
+                        </Button>
+                    </Box>
                 </Box>
 
             </Box>
+
 
             <Menu
                 anchorEl={anchorEl}
