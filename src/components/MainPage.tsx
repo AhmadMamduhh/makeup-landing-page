@@ -78,14 +78,14 @@ export default function MainPage() {
     }, []);
 
     return (
-        <Box sx={{ bgcolor: '#000', position: 'relative', minHeight: '100vh' }}>
+        <Box sx={{ bgcolor: '#000', position: 'relative', minHeight: '105vh', }}>
             <AppBar position="absolute" sx={{ backgroundColor: '#00000055', backdropFilter: 'blur(5px)' }}>
                 <Toolbar sx={{ display: "flex", justifyContent: 'space-between', py: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <Image src={"/website-icon.png"} objectFit="fill" quality={100} width={32} height={40} alt={`amunique icon`} />
                     </Box>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4, marginLeft: 'auto', }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4, marginLeft: 'auto', marginRight: '5px' }}>
                         <Typography
                             variant="h6"
                             color="white"
@@ -183,11 +183,11 @@ export default function MainPage() {
                         </Slide>
 
                         {/* Search Icon */}
-                        <IconButton color="info" onClick={handleSearchToggle}>
+                        {!searchOpen && <IconButton color="info" onClick={handleSearchToggle}>
                             <Slide direction="left" in={!searchVisible}>
                                 <SearchIcon />
                             </Slide>
-                        </IconButton>
+                        </IconButton>}
 
                         <IconButton color="info" onClick={handleMenuOpen} style={{ marginRight: '5px' }}>
                             <PersonOutlineIcon />
@@ -210,7 +210,7 @@ export default function MainPage() {
                 </Toolbar>
             </AppBar>
 
-            <Box sx={{ minHeight: '630px', position: 'relative' }}>
+            <Box sx={{ height: '90vh', position: 'relative', }}>
                 {images.map((image, index) => (
                     <Box width="900px" display="flex" justifyContent="center">
                         <Slide key={index} direction={index === currentIndex ? 'right' : 'left'} in={index === currentIndex} mountOnEnter unmountOnExit timeout={{ enter: index === 0 && isEntryPoint ? 0 : 1000, exit: 1000 }}>
@@ -220,16 +220,16 @@ export default function MainPage() {
                     </Box>
                 ))}
 
-                <Box sx={{ textAlign: 'center', color: 'common.white', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'absolute', top: '98%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(0, 0, 0, 0.4)', width: '100%' }}>
+                <Box sx={{ textAlign: 'center', color: 'common.white', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'absolute', top: '95%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(0, 0, 0, 0.4)', width: '100%' }}>
                     <Typography sx={{ textAlign: 'center' }} variant="subtitle1" fontSize="4.5rem" fontWeight={500} margin={0} color="primary" width="100%" fontFamily={"initial"}>
                         {texts[currentIndex]}
                     </Typography>
-                    <Box display="flex" justifyContent={'center'} mt={-2}>
+                    <Box display="flex" justifyContent={'center'} mt={-1.5}>
                         <Typography variant="subtitle1" fontWeight="bold" sx={{ width: '800px', textAlign: 'center' }}>
                             Join our vibrant community platform to connect with makeup enthusiasts, share insights, and engage in discussions about the timeless allure of Egyptian beauty.
                         </Typography>
                     </Box>
-                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ mt: 2.5, display: 'flex', justifyContent: 'center' }}>
                         <Button
                             variant="contained"
                             sx={{
