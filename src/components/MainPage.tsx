@@ -85,7 +85,7 @@ export default function MainPage() {
                         <Image src={"/website-icon.png"} objectFit="fill" quality={100} width={32} height={40} alt={`amunique icon`} />
                     </Box>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4, marginLeft: 'auto', marginRight: '5px' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4, marginLeft: 'auto', marginRight: '10px' }}>
                         <Typography
                             variant="h6"
                             color="white"
