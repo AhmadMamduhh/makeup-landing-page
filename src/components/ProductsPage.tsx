@@ -14,7 +14,7 @@ const ProductsPage = () => {
     return (
         <Box sx={{ backgroundColor: '#fff', minHeight: '100vh', padding: '20px', position: 'relative', }}>
             {/* Top Section */}
-            < Box sx={{ textAlign: 'center', mb: 4 }}>
+            < Box sx={{ textAlign: 'center', mb: 4, mt: 3 }}>
                 <Typography variant="subtitle1" fontSize="1.5rem" color="#1E1E1E">
                     Featured Products
                 </Typography>
@@ -31,7 +31,7 @@ const ProductsPage = () => {
             </Box>
 
             {/* Carousel Section */}
-            <Box mb={3} zIndex={3}>
+            <Box mb={5} zIndex={3}>
                 <ProductCarousel images={products} />
             </Box>
 
