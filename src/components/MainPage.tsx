@@ -21,6 +21,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import { animated, useSpring } from 'react-spring';
+import theme from './theme/theme';
 
 export default function MainPage() {
     const [searchOpen, setSearchOpen] = useState(false);
@@ -212,13 +213,36 @@ export default function MainPage() {
 
             <Box sx={{ height: '90vh', position: 'relative', }}>
                 {images.map((image, index) => (
-                    <Box width="900px" display="flex" justifyContent="center">
+                    <Box width="900px" display="flex" justifyContent="center" >
                         <Slide key={index} direction={index === currentIndex ? 'right' : 'left'} in={index === currentIndex} mountOnEnter unmountOnExit timeout={{ enter: index === 0 && isEntryPoint ? 0 : 1000, exit: 1000 }}>
                             <Image src={image} objectFit="contain" quality={100} layout="fill" alt={`Slide ${index}`} style={{ marginTop: '30px' }} />
-
                         </Slide>
                     </Box>
                 ))}
+
+                {currentIndex === 0 && <Box sx={{
+                    position: 'absolute', top: '15%', left: '26%',
+                    borderRight: `4px solid ${theme.palette.primary.main}`,
+                    borderTop: `4px solid ${theme.palette.primary.main}`,
+                    width: '45%',
+                    height: '65%'
+                }} />}
+
+                {currentIndex === 1 && <Box sx={{
+                    position: 'absolute', top: '28%', left: '26%',
+                    borderLeft: `4px solid ${theme.palette.primary.main}`,
+                    borderBottom: `4px solid ${theme.palette.primary.main}`,
+                    width: '50%',
+                    height: '50%'
+                }} />}
+
+                {currentIndex === 2 && <Box sx={{
+                    position: 'absolute', top: '13%', left: '26%',
+                    borderLeft: `4px solid ${theme.palette.primary.main}`,
+                    borderBottom: `4px solid ${theme.palette.primary.main}`,
+                    width: '27%',
+                    height: '65%'
+                }} />}
 
                 <Box sx={{ textAlign: 'center', color: 'common.white', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'absolute', top: '95%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(0, 0, 0, 0.4)', width: '100%' }}>
                     <Typography sx={{ textAlign: 'center' }} variant="subtitle1" fontSize="4.5rem" fontWeight={500} margin={0} color="primary" width="100%" fontFamily={"initial"}>
