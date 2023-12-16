@@ -7,11 +7,8 @@ import {
     Typography,
     Button,
     IconButton,
-    Avatar,
     Menu,
     MenuItem,
-    InputBase,
-    Paper,
     TextField,
     InputAdornment,
     Slide,
@@ -20,7 +17,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
-import { animated, useSpring } from 'react-spring';
 import theme from './theme/theme';
 
 export default function MainPage() {
@@ -46,21 +42,6 @@ export default function MainPage() {
         setSearchOpen(!searchOpen);
         setSearchVisible(!searchVisible);
     };
-
-    // Use React-Spring for smooth transitions
-    // const transitions = useSpring({
-    //     opacity: 0,
-    //     from: { opacity: 1 },
-    //     reset: true,
-    //     onRest: () => {
-    //         // Change to the next image and text
-    //         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    //     },
-    //     config: {
-    //         duration: 5000, // 5 seconds for each transition
-
-    //     },
-    // });
 
     useEffect(() => {
         let intervalId: any;
