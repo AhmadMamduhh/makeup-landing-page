@@ -4,11 +4,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import theme from '../theme/theme';
 
-interface ProductsCarouselInterface {
+interface ReviewsCarouselInterface {
     images: string[];
 }
 
-const ProductCarousel: React.FC<ProductsCarouselInterface> = ({ images }) => {
+const ReviewsCarousel: React.FC<ReviewsCarouselInterface> = ({ images }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
@@ -31,25 +31,15 @@ const ProductCarousel: React.FC<ProductsCarouselInterface> = ({ images }) => {
                 display: 'inline-flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: '50%',
-                width: '310px',
-                height: '310px',
+                width: '500px',
+                height: '300px',
                 marginBottom: '50px',
-                marginTop: '50px',
-                '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '-30px',
-                    left: '-30px',
-                    right: '-30px',
-                    bottom: '-30px',
-                    background: `radial-gradient(circle at 50% 50%, ${theme.palette.primary.main} 0%, transparent 70%)`,
-                    borderRadius: '50%',
-                    zIndex: 2,
-                    transform: 'scale(1.1)',
-                },
+                marginTop: '20px',
+                mx: 5,
+                borderRight: `4px solid ${theme.palette.primary.main}`,
+                borderBottom: `4px solid ${theme.palette.primary.main}`
             }}>
-                <img src={images[currentIndex]} alt={`Product ${currentIndex + 1}`} style={{ zIndex: 3, objectFit: 'contain', width: '200px', height: '350px' }} />
+                <img src={images[currentIndex]} alt={`Product ${currentIndex + 1}`} style={{ zIndex: 3, objectFit: 'contain', width: '400px', height: '400px' }} />
 
             </Box>
 
@@ -60,4 +50,4 @@ const ProductCarousel: React.FC<ProductsCarouselInterface> = ({ images }) => {
     );
 };
 
-export default ProductCarousel;
+export default ReviewsCarousel;

@@ -12,7 +12,7 @@ const FooterContainer = styled(Container)(({ theme }) => ({
     color: 'white',
 }));
 
-const FooterLink = styled(Link)({
+export const FooterLink = styled(Link)({
     color: 'white',
     textDecoration: 'none',
     '&:hover': {

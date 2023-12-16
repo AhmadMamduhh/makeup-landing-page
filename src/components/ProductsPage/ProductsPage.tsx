@@ -12,7 +12,7 @@ import ProductCarousel from './ProductCarousel';
 const ProductsPage = () => {
     const products = ['products/product1.png', 'products/product2.png', 'products/product3.png', 'products/product4.png']
     return (
-        <Box sx={{ backgroundColor: '#fff', minHeight: '100vh', padding: '20px', position: 'relative', }}>
+        <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', padding: '20px', position: 'relative', }}>
             {/* Top Section */}
             < Box sx={{ textAlign: 'center', mb: 4, mt: 3 }}>
                 <Typography variant="subtitle1" fontSize="1.5rem" color="#1E1E1E">

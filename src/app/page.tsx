@@ -3,6 +3,7 @@ import ProductsPage from '../components/ProductsPage/ProductsPage'
 import { Box } from '@mui/material'
 import AboutUs from '@/components/AboutUs'
 import Footer from '@/components/FooterPage'
+import CustomerReviews from '@/components/CustomerReviewsPage/CustomerReviewsPage'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <MainPage />
       <ProductsPage />
       <AboutUs />
+      <CustomerReviews />
       <Footer />
     </Box>
   )
